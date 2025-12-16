@@ -1,0 +1,7 @@
+{
+  "name": "Raptor YouTube Feed Card",
+  "content_in_root": true,
+  "render_readme": true,
+  "domains": ["lovelace"],
+  "homeassistant": "2023.7.0"
+}
