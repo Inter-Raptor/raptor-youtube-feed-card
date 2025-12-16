@@ -1,0 +1,6 @@
+{
+  "name": "raptor-youtube-feed-card",
+  "version": "0.1.0",
+  "description": "Custom Lovelace card for Home Assistant to aggregate YouTube channels via RSS feeds with filters, grid/list and optional embedded player.",
+  "license": "MIT"
+}
