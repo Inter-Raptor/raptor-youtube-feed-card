@@ -1,3 +1,5 @@
+![List and Grid comparison](./raptor-youtube-demo-comparison.gif)
+
 # 🦖 Raptor YouTube Feed Card
 
 > **Custom Lovelace card for Home Assistant**  
@@ -35,7 +37,7 @@ Part of the **Raptor Cards ecosystem**, designed for:
 
 ### 📐 Layouts
 - **List mode** (classic feed layout)
-- **Grid mode** (video wall style)
+- **Grid mode** (video wall / thumbnails)
 - Optional metadata display:
   - title
   - channel name
@@ -59,10 +61,68 @@ Part of the **Raptor Cards ecosystem**, designed for:
 
 ---
 
+## 🖼️ Layout examples
+
+### 📋 List mode (popup player)
+
+![List demo](./raptor-youtube-demo-list.gif)
+
+```yaml
+type: custom:raptor-youtube-feed-card
+title: Actu YouTube (List)
+layout: list
+
+player_mode: dialog
+player_autoplay: true
+
+show_refresh: true
+
+collapsible: true
+show_expand: true
+items_collapsed: 4
+items_expanded: 8
+
+channel_ids:
+  - UCHbCfQACGAsTbgnF6eppHRw
+  - UC_yP2DpIgs5Y1uWC0T03Chw
+```
+
+---
+
+### 🧱 Grid mode (3×3, inline player)
+
+![Grid demo](./raptor-youtube-demo-grid.gif)
+
+```yaml
+type: custom:raptor-youtube-feed-card
+title: Actu YouTube (Grid 3×3)
+layout: grid
+grid_columns: 3
+
+player_mode: inline
+player_autoplay: true
+
+show_refresh: true
+
+collapsible: true
+show_expand: true
+items_collapsed: 9
+items_expanded: 18
+
+tile_show_title: false
+tile_show_channel: false
+tile_show_date: false
+
+channel_ids:
+  - UCHbCfQACGAsTbgnF6eppHRw
+  - UC_yP2DpIgs5Y1uWC0T03Chw
+```
+
+---
+
 ## 📦 Installation
 
 ### HACS (recommended)
-*(when published)*
 
 1. Open **HACS**
 2. Go to **Frontend → Custom cards**
@@ -74,7 +134,7 @@ Part of the **Raptor Cards ecosystem**, designed for:
 
 ### Manual installation
 
-1. Copy the file:
+1. Copy:
    ```
    raptor-youtube-feed-card.js
    ```
@@ -83,7 +143,7 @@ Part of the **Raptor Cards ecosystem**, designed for:
    /config/www/
    ```
 
-2. Add the resource in Home Assistant:
+2. Add the resource:
    - **Settings → Dashboards → Resources**
    - Type: **JavaScript module**
    - URL:
@@ -91,27 +151,20 @@ Part of the **Raptor Cards ecosystem**, designed for:
      /local/raptor-youtube-feed-card.js
      ```
 
-3. Reload the browser (**Ctrl + F5**)
+3. Reload browser (**Ctrl + F5**)
 
 ---
 
 ## 🧠 Dependencies & architecture
 
-❌ No Home Assistant integration required  
-❌ No API key needed  
-✔ Works entirely as a frontend card
+❌ No Home Assistant integration  
+❌ No API key  
+✔ Frontend-only card
 
-⚠️ The card depends on:
+⚠️ Depends on:
 - YouTube **RSS feeds**
-- Browser **CORS restrictions**
-- A **proxy** to bypass CORS
-
-### Proxy options
-- `allorigins` (default, public)
-- `corsproxy.io`
-- `none` (direct, may fail due to CORS)
-
-➡️ For public sharing or higher reliability, a **local proxy** (Node-RED / Nginx / HA add-on) is recommended.
+- Browser **CORS**
+- Optional **proxy**
 
 ---
 
@@ -119,8 +172,7 @@ Part of the **Raptor Cards ecosystem**, designed for:
 
 When adding the card, you get a **full visual editor**.
 
-### Channel IDs input
-
+### Channel IDs
 Enter **one Channel ID per line**:
 
 ```
@@ -128,132 +180,14 @@ UCHbCfQACGAsTbgnF6eppHRw
 UC_yP2DpIgs5Y1uWC0T03Chw
 ```
 
-The card automatically generates the corresponding YouTube RSS feeds.
-
-> One Channel ID is **pre-filled by default** and can be removed at any time.
-
----
-
-### 🔎 How to quickly get a Channel ID (YouTube UI)
-
-The easiest method (no external tools required):
-
-1. Open the **YouTube channel page**
-2. Click **… More** (or **About / Plus…**, depending on your language)
-3. Click **Share channel**
-4. Click **Copy channel ID**
-
-Paste the copied ID into the card (one ID per line).
-
----
-
-## ⚙️ Configuration options
-
-### Playback
-```yaml
-player_mode: inline     # external | inline | dialog
-player_autoplay: false
-player_mute: false
-open_in_new_tab: true
-```
-
-### Content filter
-```yaml
-content_filter: both    # both | videos | shorts
-```
-
-### Layout
-```yaml
-layout: grid            # list | grid
-grid_columns: 3
-grid_gap: 10
-```
-
-### Expand / collapse
-```yaml
-collapsible: true
-show_expand: true
-items_collapsed: 6
-items_expanded: 12
-```
-
-### Fixed height (recommended for dashboards)
-```yaml
-fixed_height: true
-height: 420
-scroll: true
-```
-
----
-
-## 🧪 Minimal YAML example
-
-```yaml
-type: custom:raptor-youtube-feed-card
-title: YouTube Updates
-channel_ids:
-  - UCHbCfQACGAsTbgnF6eppHRw
-layout: list
-player_mode: external
-```
-
----
-
-## 🧪 Video wall example
-
-```yaml
-type: custom:raptor-youtube-feed-card
-title: YouTube Wall
-layout: grid
-grid_columns: 3
-content_filter: videos
-collapsible: true
-items_collapsed: 9
-items_expanded: 18
-player_mode: dialog
-fixed_height: true
-height: 480
-channel_ids:
-  - UCHbCfQACGAsTbgnF6eppHRw
-  - UC_yP2DpIgs5Y1uWC0T03Chw
-```
-
 ---
 
 ## 🦖 Raptor Cards ecosystem
 
-This card follows the same design philosophy as:
-
+Same philosophy as:
 - **Raptor Orbit Card**
 - **Raptor Bar Next Card**
 - **Raptor Grid Card**
-- **Raptor YouTube Feed Card**
-
-Shared goals:
-- modular
-- readable
-- user-first
-- no unnecessary dependencies
-
----
-
-## ⚠️ Known limitations
-
-- YouTube RSS does **not officially mark Shorts**
-  - Shorts detection is heuristic (`/shorts/` in URL)
-- Public proxy services may be:
-  - slow
-  - rate-limited
-  - unavailable
-
----
-
-## 🛣️ Possible roadmap
-
-- UI buttons for Videos / Shorts filtering
-- Advanced “thumbnails-only” grid mode
-- Built-in local proxy helper
-- Visual alignment with other Raptor cards
 
 ---
 
@@ -269,4 +203,3 @@ aka **Inter-Raptor**
 ## 📄 License
 
 MIT
-****
